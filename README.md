@@ -1,8 +1,10 @@
-# Mercury Vagrant (HGV) Deployment Playbook (with MariaDB)
+# Mercury Vagrant (HGV) Deployment Playbook (with MariaDB) with extreme hardening
 
 ## Introduction
 
-This Ansible Playbook is designed to setup a [Mercury-Like](https://github.com/wpengine/hgv/) environment on a Production server without the configuration hassle. This playbook was forked from [WPEngine's Mercury Vagrant](https://github.com/wpengine/hgv/). It includes the ability to install multiple hostnames and installs of WordPress on one server super easily.
+This Ansible Playbook is designed to setup a [Mercury-Like](https://github.com/wpengine/hgv/) environment on a Production server without the configuration hassle. This playbook was forked from [WPEngine's Mercury Vagrant](https://github.com/wpengine/hgv/). It includes the ability to install multiple hostnames and installs of WordPress on multiple servers super easily.
+
+*Note: Currently fork is under development. The goal is to implement [wpcop.com](http://wpcop.com) security policies*
 
 *Note: Remember not to run weird scripts on your server as root without reviewing them first. Please review this playbook to ensure I'm not installing malicious software.*
 
