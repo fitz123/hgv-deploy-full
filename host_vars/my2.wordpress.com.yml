@@ -1,0 +1,7 @@
+---
+db: wordpress2
+db_user: wpuser2
+db_user_password: secret2
+wp_admin: admin2
+wp_admin_password: password2
+wp_site_name: Mercury Site2
