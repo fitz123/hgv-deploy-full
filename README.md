@@ -12,7 +12,7 @@ This Playbook will setup:
 - **HHVM** (Default PHP Parser)
 - **PHP-FPM** (Backup PHP Parser)
 - **Nginx**
-- **Varnish ** (Running by default)
+- **Varnish** (Running by default)
 - **Memcached and APC**
 - **Clean WordPress Install** (Latest Version)
 - **WP-CLI**

@@ -1,7 +1,7 @@
 ---
 - name: Install necessary packages for proper system state
   run_once: true
-  apt: name={{ item }} state=latest
+  apt: name={{ item }} state=latest update_cache=yes
   sudo: yes
   with_items:
     - sysv-rc-conf
