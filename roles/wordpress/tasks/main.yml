@@ -17,18 +17,30 @@
   file: src=/etc/nginx/sites-available/{{ inventory_hostname }} dest=/etc/nginx/sites-enabled/{{ inventory_hostname }} state=link
   notify: nginx reload
 
+- name: "Ensure WordPress directory exists"
+  stat: path="{{ wp_doc_root }}/{{ inventory_hostname }}/wp-content"
+  register: "wp_dir"
+
 - name: "Download and install WordPress for {{ enviro }}"
   command: /usr/local/bin/wp core download --path={{ wp_doc_root}}/{{ inventory_hostname }}
   sudo: yes
   sudo_user: "{{ web_user }}"
+  register: command_result
+  when: wp_dir.stat.exists == False
 
-- name: Fetch random salts for WordPress config
+- name: "Ensure WordPress config exists"
+  stat: path="{{ wp_doc_root }}/{{ inventory_hostname }}/wp-config.php"
+  register: "wp_conf"
+
+- name: "Fetch random salts for WordPress config"
   local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
   register: "wp_salt"
   sudo: no
+  when: wp_conf.stat.exists == False
 
 - name: "Create wp-config for {{ enviro }}"
   template: src=wp/wp-config.php dest={{ wp_doc_root }}/{{ inventory_hostname }}/wp-config.php owner={{ web_user }} group={{ web_group }}
+  when: wp_conf.stat.exists == False
 
 - name: "Localconfig for {{ enviro }} WordPress"
   template: src=wp/local-config.php dest={{ wp_doc_root }}/{{ inventory_hostname }}/local-config.php owner={{ web_user }} group={{ web_group }}
@@ -37,8 +49,8 @@
   template: src=wp/object-cache.php dest={{ wp_doc_root }}/{{ inventory_hostname }}/wp-content/object-cache.php owner={{ web_user }} group={{ web_group }}
 
 - name: "Run the WP install for {{ enviro }}"
-  command: /usr/local/bin/wp core install --url={{ inventory_hostname }} --title="{{ wp_site_name }}" --admin_user={{ wp_admin }} --admin_password={{ wp_admin_password }} --admin_email="admin@example.com"
+  command: chdir={{ wp_doc_root }}/{{ inventory_hostname }} /usr/local/bin/wp core install --url={{ inventory_hostname }} --title="{{ wp_site_name }}" --admin_user={{ wp_admin }} --admin_password={{ wp_admin_password }} --admin_email="admin@example.com"
   sudo: yes
   sudo_user: "{{ web_user }}"
-  args:
-      chdir: "{{ wp_doc_root }}/{{ inventory_hostname }}"
+  register: command_result
+  changed_when: not "'WordPress files seem to already be present here.' in command_result.stderr"
