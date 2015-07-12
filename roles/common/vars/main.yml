@@ -1,0 +1,7 @@
+---
+
+# Put here your valid credentials and you will receive email from the server
+
+root_email: your@email.com
+AuthUser: your@gmail.com
+AuthPass: yourGmailPass

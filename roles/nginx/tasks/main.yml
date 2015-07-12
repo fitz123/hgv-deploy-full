@@ -18,11 +18,11 @@
     - /etc/nginx/sites-enabled
 
 - name: Configure /etc/nginx/nginx.conf
-  template: src=etc/nginx/nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
+  template: src=etc/nginx/nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
   notify: nginx restart
 
 - name: Do nginx upstream.conf
-  template: src=etc/nginx/conf.d/upstream.conf dest=/etc/nginx/conf.d/upstream.conf owner=root group=root mode=0644
+  template: src=etc/nginx/conf.d/upstream.conf.j2 dest=/etc/nginx/conf.d/upstream.conf owner=root group=root mode=0644
   notify: nginx restart
 
 - name: Remove default.conf

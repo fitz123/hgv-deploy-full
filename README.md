@@ -18,33 +18,39 @@ This Playbook will setup:
 - **Memcached and APC**
 - **Clean WordPress Install** (Latest Version)
 - **WP-CLI**
+- **webmin**
+
+And Hardered: 
+
+- **MariaDB**
+- **WordPress**
+- **webmin access**
+- **root privileges**
+- **Remove and monitor suid/sgid bits from vulnerable system applications**
+- *Permissions for new users, delete unnecessary system users* (partially)
+- *logrotate configuration* (partially)
+
+Under development hardening:
+
+- *Server networking (iptables, CSF, TCP, DDoS defence, NIDS, WAF)*
+- *Kernel (RBAC, rootkit protection)*
+- *OSSEC for logs*
+- *Much more for WordPress*
 
 #### This playbook tested only run on Digital Ocean Ubuntu 14.04 LTS
 
 ## Installation
 
-1. SSH onto a newly created server 1.5. Add necessary Apt package (if not already installed) with `sudo apt-get install software-properties-common -y`
-2. Add Ansible with `sudo add-apt-repository ppa:ansible/ansible`
-3. Update Apt with `sudo apt-get update && sudo apt-get upgrade -y`
-4. Install Git and Ansible with `sudo apt-get install ansible git -y`
+1. Setup Ansible for the Manager server
 5. Clone this repository with `git clone https://github.com/fitz123/hgv-deploy-full.git`
 6. Move into `cd hgv-deploy-full`
-7. Edit the `hosts` file and change `my.wordpress.com` to your host name. If you have more than one website that you want to install on this server add each on a new line.
-8. Edit the name of `my.wordpress.com` file in the `host_vars` folder to your hostname. If you have more than one website that you want to install on this server copy the current one and name it the hostname of the website.
-9. Change your sites specific information **including passwords** inside the hostname file inside the `host_vars` directory
+7. Edit the `hosts` file and change `my.wordpress.com` to your host name. If you have more than one server that you want to install this framework add each on a new line.
+8. Change the name of the host file in `host_vars` folder to your hostname and edit variables appropriate. If you have more than one website that you want to install on this server copy the current one and name it the hostname of the website.
+9. Put your mail credentials into `roles/common/vars/main.yml` file
+10. Put your public key for security servers access into `roles/hardening-misc/files/id_rsa.pub`
 10. Run Ansible with `sudo ansible-playbook -i hosts -u root playbook.yml`. If you have any errors please open a new issue in this repository.
 11. Remove the cloned git directory from your server with `rm -rf hgv-deploy-full/`
 12. You're good to go! A new WordPress install running HHVM and Varnish should be waiting for you at your hostname/s!
-
-## Installing a New Website/Hostname
-
-*This only works on sites that were installed using the method above. Always backup your server before running code that could break it.*
-
-1. Backup your server
-2. Follow steps 1-6 above
-3. When you come to your `hosts` file follow the same steps however **do not include any previous installations of WordPress or hostnames, only list the new ones you want.**
-4. Likewise with your `host_var` folder
-5. Follow steps 9-12 and if you run into any issues or errors post them in this repository!
 
 ## Turning off Varnish (Use only Nginx)
 

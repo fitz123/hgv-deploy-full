@@ -3,13 +3,15 @@
   sudo: yes
 
   roles:
-#    - common
-#    - { role: hhvm, when: ansible_lsb.major_release | int >= 14 }
-#    - php-fpm
-#    - memcached
-#    - mariadb
-#    - nginx
-#    - wp-cli
-#    - varnish
-#    - { role: wordpress, enviro: hhvm, tags: [ 'wordpress' ] }
+    - common
+    - { role: hhvm, when: ansible_lsb.major_release | int >= 14 }
+    - php-fpm
+    - memcached
+    - mariadb
+    - nginx
+    - wp-cli
+    - varnish
+    - { role: wordpress, enviro: hhvm, tags: [ 'wordpress' ] }
     - webmin
+    - hardening-misc
+    - sxid

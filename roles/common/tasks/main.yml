@@ -32,4 +32,10 @@
 - name: Fix the stdin bug, step 2
   lineinfile: dest=/root/.profile line="tty -s && mesg n"
 
+- name: Install mail
+  apt: name=ssmtp state=present
+
+- name: Configure to resend root mail to real email. Take a look at the variables
+  template: src=etc/ssmtp/ssmtp.conf.j2 dest=/etc/ssmtp/ssmtp.conf owner=root group=root mode=0644
+
 - include: swap.yml

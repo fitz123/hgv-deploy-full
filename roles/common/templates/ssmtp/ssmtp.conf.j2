@@ -1,0 +1,9 @@
+# root is the person who gets all mail for userids < 1000
+root={{ root_email }}
+
+# Here is the gmail configuration (or change it to your private smtp server)
+mailhub=smtp.gmail.com:587
+AuthUser={{ AuthUser }}
+AuthPass={{ AuthPass }}
+UseTLS=YES
+UseSTARTTLS=YES

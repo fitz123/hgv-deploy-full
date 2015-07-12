@@ -1,0 +1,76 @@
+---
+
+ - name: Create server management user
+   user: name={{ server_admin }}
+         comment="Server admin"
+         state=present
+         password={{ server_admin_pass }}
+         shell=/bin/bash
+   tags:
+     - hardening-misc
+     - hardening
+
+ - name: Authtorize our public key for login as a remote admin
+   authorized_key: user={{ server_admin }}
+                   key="{{ server_admin_authkey }}"
+   tags:
+     - hardening-misc
+     - hardening
+
+ - name: Disable RootSudo
+   command: passwd -dl root
+   register: dis_root
+   changed_when: "not 'password expiry information changed' in dis_root.stdout"
+   tags:
+     - hardening-misc
+     - hardening
+
+ - name: Ensure 750 is the default permissions for new users
+   replace: dest=/etc/adduser.conf regexp='^DIR_MODE=.*' replace='DIR_MODE=0750'
+   tags:
+     - hardening-misc
+     - hardening
+
+ - name: Deleting unnecessary non-human users
+   command: echo We need drop some users
+   tags:
+     - hardening-misc
+     - hardening
+
+ - name: Remove SxID permissions from rare-used applications
+   #file: path=/usr/bin/bsd-write mode=2755
+   #file: path=/usr/bin/chage mode=2755
+   #file: path=/usr/bin/expiry-write mode=2755
+   #file: path=/usr/bin/wall-write mode=2755
+   #file: path=/usr/bin/bsd-write mode=2755
+   #file: path=/usr/bin/chfn mode=4755
+   #file: path=/usr/bin/chsh mode=4755
+   #file: path=/usr/bin/gpasswd mode=4755
+   #file: path=/usr/bin/newgrp mode=4755
+   #file: path=/bin/mount mode=4755
+   #file: path=/bin/umount mode=4755
+   #file: path=/bin/ping mode=4755
+   #file: path=/bin/ping6 mode=4755
+   file: path={{ item }} mode=0755
+   with_items: 
+     - /usr/bin/bsd-write
+     - /usr/bin/chage
+     - /usr/bin/chfn
+     - /usr/bin/chsh
+     - /usr/bin/expiry
+     - /usr/bin/gpasswd
+     - /bin/mount
+     - /usr/bin/newgrp
+     - /bin/ping
+     - /bin/ping6
+     - /bin/umount
+     - /usr/bin/wall
+   tags:
+     - hardening-misc
+     - hardening
+
+ - name: Checking logrotate
+   command: echo We need to check logrotate somehow
+   tags:
+     - hardening-misc
+     - hardening

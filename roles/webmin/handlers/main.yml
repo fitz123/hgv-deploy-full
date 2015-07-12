@@ -3,6 +3,8 @@
 - name: webmin restart
   service: name=webmin state=restarted
 
+- name: webmin start
+  service: name=webmin state=started enabled=yes
+
 - name: webmin stop
   service: name=webmin state=stopped enabled=no
-

@@ -1,8 +1,11 @@
 ---
 db: wordpress
-db_user: wpuser
-db_user_password: secret
-wp_admin: admin
+db_user: dbuser
+db_user_password: password
+wp_admin: wpadmin
 wp_admin_password: password
 wp_site_name: Mercury Site
-webmin_allow: 223.205.206.158
+webmin_allow: 127.0.0.1
+server_admin: admin
+server_admin_pass: $6$BPVapajUKYMQJ$EWrz9eG9.V1vT6ihzd921hyRS2ipfK68Ndeey3RmgyMpGCZ9d9fX7XQz.V2hCz.4VuJszAG01lQU7UWx725xA/
+server_admin_authkey: "{{ lookup('file', 'id_rsa.pub') }}"

@@ -9,11 +9,11 @@
   apt: name=hhvm state=present
 
 - name: Do /etc/hhvm/server.ini
-  template: src=etc/hhvm/server.ini dest=/etc/hhvm/server.ini owner=root group=root mode=0644
+  template: src=etc/hhvm/server.ini.j2 dest=/etc/hhvm/server.ini owner=root group=root mode=0644
   notify: hhvm restart
 
 - name: Do /etc/hhvm/php.ini
-  template: src=etc/hhvm/php.ini dest=/etc/hhvm/php.ini owner=root group=root mode=0644
+  template: src=etc/hhvm/php.ini.j2 dest=/etc/hhvm/php.ini owner=root group=root mode=0644
   notify: hhvm restart
 
 - name: Ensure HHVM is running

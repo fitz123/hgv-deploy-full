@@ -1,0 +1,13 @@
+---
+
+ - name: Install SXiD
+   apt: name=sxid state=present
+   tags:
+     - hardening-misc
+     - hardening
+
+ - name: Cronning SXID
+   cron: name="Daily SXiD" minute="12" hour="8" job="/usr/bin/sxid"
+   tags:
+     - hardening-misc
+     - hardening
