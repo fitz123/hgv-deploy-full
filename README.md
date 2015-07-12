@@ -20,7 +20,7 @@ This Playbook will setup:
 - **WP-CLI**
 - **webmin**
 
-And Hardered: 
+And Harder following: 
 
 - **MariaDB**
 - **WordPress**
