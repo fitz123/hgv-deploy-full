@@ -1,0 +1,29 @@
+---
+
+- name: Add the Webmin repository
+  apt_repository: repo='deb http://download.webmin.com/download/repository sarge contrib' state=present
+  tags:
+    - webmin
+
+- name: Add the Webmin GPG key to apt
+  apt_key: url=http://www.webmin.com/jcameron-key.asc state=present
+  tags:
+    - webmin
+
+- name: Install Webmin
+  apt: name=webmin state=present update_cache=yes
+  tags:
+    - webmin
+
+- name: Allow only connections from trusted IP addresses
+  template: src=etc/webmin/miniserv.conf dest=/etc/webmin/miniserv.conf owner=root group=root mode=0600
+  notify: webmin stop
+  tags:
+    - webmin
+    - hardening
+
+- name: Ensure Webmin service disabled
+  service: name=webmin state=stopped enabled=no
+  tags:
+    - webmin
+    - hardening

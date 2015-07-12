@@ -5,3 +5,4 @@ db_user_password: secret
 wp_admin: admin
 wp_admin_password: password
 wp_site_name: Mercury Site
+webmin_allow: 223.205.206.158
